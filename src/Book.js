@@ -1,18 +1,18 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
     updateBookShelf: PropTypes.func.isRequired
-  }
+  };
   handleShelfChange = (e) => {
     const newShelf = e.target.value;
     const { id } = this.props.book;
     if(this.props.updateBookShelf){
       this.props.updateBookShelf(id, newShelf);
     }
-  }
+  };
   render() {
     const { title, authors, bookCover, shelf } = this.props.book;
     return (
@@ -40,4 +40,4 @@ class Book extends Component {
   }
 }
 
-export default Book
+export default Book;

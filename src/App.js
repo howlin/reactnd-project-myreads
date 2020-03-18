@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 // import * as BooksAPI from './BooksAPI'
-import './App.css'
-import Bookshelf from './Bookshelf'
+import './App.css';
+import Bookshelf from './Bookshelf';
 
 class BooksApp extends React.Component {
   state = {
@@ -93,14 +93,14 @@ class BooksApp extends React.Component {
       },
       shelf: 'read'
     }]
-  }
+  };
   removeBook = bookId => {
     this.setState( prevState => ({
       books: prevState.books.filter(b => {
         return b.id !== bookId;
       })
     }));
-  }
+  };
   updateBookShelf = (bookId, shelf) => {
     if (shelf === 'none'){
       this.removeBook(bookId);
@@ -116,7 +116,7 @@ class BooksApp extends React.Component {
         return updatedBook;
       })
     }));
-  }
+  };
   render() {
     return (
       <div className="app">
@@ -165,4 +165,4 @@ class BooksApp extends React.Component {
   }
 }
 
-export default BooksApp
+export default BooksApp;
