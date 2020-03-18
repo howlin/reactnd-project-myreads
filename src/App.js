@@ -161,7 +161,7 @@ class BooksApp extends React.Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 

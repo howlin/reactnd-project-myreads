@@ -36,7 +36,7 @@ class Book extends Component {
         <div className="book-title">{title}</div>
         <div className="book-authors">{authors}</div>
       </div>
-    )
+    );
   }
 }
 
