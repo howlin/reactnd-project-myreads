@@ -18,9 +18,9 @@ class Book extends Component {
     return (
       <div className="book">
         <div className="book-top">
-          <div className="book-cover" style={{ 
-                  width: bookCover.width, 
-                  height: bookCover.height, 
+          <div className="book-cover" style={{
+                  width: bookCover.width,
+                  height: bookCover.height,
                   backgroundImage: `url("${bookCover.backgroundImage}")` }}>
           </div>
           <div className="book-shelf-changer">
