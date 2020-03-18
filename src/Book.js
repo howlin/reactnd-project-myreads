@@ -14,14 +14,14 @@ class Book extends Component {
     }
   };
   render() {
-    const { title, authors, bookCover, shelf } = this.props.book;
+    const { title, authors, imageLinks, shelf } = this.props.book;
     return (
       <div className="book">
         <div className="book-top">
           <div className="book-cover" style={{
-                  width: bookCover.width,
-                  height: bookCover.height,
-                  backgroundImage: `url("${bookCover.backgroundImage}")` }}>
+                  minWidth: 128,
+                  minHeight: 188,
+                  backgroundImage: `url("${imageLinks.smallThumbnail}")` }}>
           </div>
           <div className="book-shelf-changer">
             <select onChange={this.handleShelfChange} value={shelf} >
