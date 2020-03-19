@@ -5,6 +5,7 @@ import './App.css';
 import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
 
+
 class BooksApp extends React.Component {
   state = {
     bookShelves: [{
@@ -82,37 +83,73 @@ class BooksApp extends React.Component {
       shelf: 'read'
     }]
   };
-  removeBook = bookId => {
-    this.setState( prevState => ({
-      books: prevState.books.filter(b => {
-        return b.id !== bookId;
-      })
-    }));
+  isBookOnBookshelf = (book) => {
+    let shelf;
+    this.state.books.forEach(b => {
+      if (b.id === book.id){
+        shelf = b.shelf
+      }
+    });
+    return shelf ?? 'none'
   };
-  updateBookShelf = (bookId, shelf) => {
-    if (shelf === 'none'){
-      this.removeBook(bookId);
-      return;
-    }
-
+  changeShelf = (updatedBook, shelf) => {
     this.setState( prevState => ({
       books: prevState.books.map(b => {
-        const updatedBook = b;
-        if (updatedBook.id === bookId){
-          updatedBook.shelf = shelf;
+        if (b.id === updatedBook.id){
+          b.shelf = shelf;
         }
-        return updatedBook;
+        return b;
       })
     }));
   };
+  addBook = (book, shelf) => {
+    book.shelf = shelf;
+    this.setState( prevState => {
+      const books = [...prevState.books, book]
+      return {
+        books: books
+      }
+    });
+  };
+  removeBook = book => {
+    this.setState( prevState => ({
+      books: prevState.books.filter(b => {
+        return b.id !== book.id;
+      })
+    }));
+  };
+  onChangeBook = (action, book, shelf) => {
+    if (!['changeShelf', 'add', 'delete'].includes(action)){
+      throw new Error('ERROR: action can only be "changeShelf", "add" or "delete"');
+    }
+
+    switch (action) {
+      case 'add':
+        this.addBook(book, shelf);
+        break;
+      case 'delete':
+        this.removeBook(book);
+        break;
+      case 'changeShelf':
+      default:
+        this.changeShelf(book, shelf);
+        break;
+    }
+  }
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
-          <ListBooks bookShelves={this.state.bookShelves} books={this.state.books} updateBookShelf={this.updateBookShelf} />
+          <ListBooks 
+            bookShelves={this.state.bookShelves} 
+            books={this.state.books} 
+            onChangeBook={this.onChangeBook} 
+            isBookOnBookshelf={this.isBookOnBookshelf} />
         )} />
         <Route path='/search' render={() => (
-          <SearchBooks />
+          <SearchBooks 
+            onChangeBook={this.onChangeBook} 
+            isBookOnBookshelf={this.isBookOnBookshelf} />
         )} />
       </div>
     );

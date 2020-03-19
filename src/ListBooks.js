@@ -7,10 +7,11 @@ class ListBooks extends Component {
   static propTypes = {
     bookShelves: PropTypes.array.isRequired,
     books: PropTypes.array.isRequired,
-    updateBookShelf: PropTypes.func.isRequired
+    onChangeBook: PropTypes.func.isRequired,
+    isBookOnBookshelf: PropTypes.func.isRequired
   };
   render(){
-    const { bookShelves, books, updateBookShelf } = this.props
+    const { bookShelves, books, onChangeBook, isBookOnBookshelf } = this.props
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -19,9 +20,14 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
           {bookShelves.map( ({ title, shelf }) => (
-            <Bookshelf key={title} title={title} updateBookShelf={updateBookShelf} books={
-              books.filter(book => book.shelf === shelf)
-            } />
+            <Bookshelf 
+              key={title} 
+              title={title} 
+              onChangeBook={onChangeBook} 
+              isBookOnBookshelf={isBookOnBookshelf}
+              books={
+                books.filter(book => book.shelf === shelf)
+              } />
           ))}
           </div>
         </div>

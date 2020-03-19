@@ -4,17 +4,53 @@ import PropTypes from 'prop-types';
 class Book extends Component {
   static propTypes = {
     book: PropTypes.object.isRequired,
-    updateBookShelf: PropTypes.func.isRequired
+    onChangeBook: PropTypes.func.isRequired,
+    isBookOnBookshelf: PropTypes.func.isRequired
   };
+  constructor(props){
+    super(props);
+
+    this.state = {
+      shelf: ''
+    };
+  }
+  componentDidMount() {
+    const { book, isBookOnBookshelf } = this.props
+    this.setState(() => ({
+      shelf: isBookOnBookshelf(book)
+    }));
+  }
   handleShelfChange = (e) => {
     const newShelf = e.target.value;
-    const { id } = this.props.book;
-    if(this.props.updateBookShelf){
-      this.props.updateBookShelf(id, newShelf);
+    const { book } = this.props;
+    let action;
+    
+    this.setState({shelf: newShelf});
+
+    // user has selected 'none', remove the book from the bookshelf
+    if (newShelf === 'none') {
+      action = 'delete';
+    }
+    // user has selected a new shelf, and the book was not previously on a shelf, so let's add it
+    if (newShelf !== 'none' && this.state.shelf === 'none'){
+      action = 'add';
+    }
+    // user has selected a new shelf but the book was already on another shelf, so let's update that
+    if (newShelf !== 'none' && this.state.shelf !== 'none'){
+      action = 'changeShelf';
+    }
+
+    if(this.props.onChangeBook){
+      try {
+        this.props.onChangeBook(action, book, newShelf);
+      }catch(e){
+        // if this was a production app, we'd do something better here
+        console.log(e);
+      }
     }
   };
   render() {
-    const { title, authors, imageLinks, shelf } = this.props.book;
+    const { title, authors, imageLinks } = this.props.book;
     return (
       <div className="book">
         <div className="book-top">
@@ -24,7 +60,7 @@ class Book extends Component {
                   backgroundImage: `url("${imageLinks.smallThumbnail}")` }}>
           </div>
           <div className="book-shelf-changer">
-            <select onChange={this.handleShelfChange} value={shelf} >
+            <select onChange={this.handleShelfChange} value={this.state.shelf} >
               <option value="move" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
