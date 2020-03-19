@@ -16,7 +16,7 @@ class SearchBooks extends Component {
   onSearchTermChange = searchTerm => {
     searchTerm === '' ? this.clearBooks() : this.searchBooksAPI(searchTerm);
     this.setState(() => ({
-      searchTerm: searchTerm.trim()
+      searchTerm: searchTerm
     }));
   };
   clearBooks = () => {
