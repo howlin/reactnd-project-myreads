@@ -31,7 +31,7 @@ class SearchBooks extends Component {
         return {
           id: id,
           title: title,
-          authors: '',
+          authors: authors ? authors.join(', ') : '',
           imageLinks: {
             smallThumbnail: imageLinks ? imageLinks.smallThumbnail : '',
             thumbnail: imageLinks ? imageLinks.thumbnail : ''
