@@ -7,13 +7,9 @@ class Book extends Component {
     onChangeBook: PropTypes.func.isRequired,
     isBookOnBookshelf: PropTypes.func.isRequired
   };
-  constructor(props){
-    super(props);
-
-    this.state = {
-      shelf: ''
-    };
-  }
+  state = {
+    shelf: ''
+  };
   componentDidMount() {
     const { book, isBookOnBookshelf } = this.props;
     this.setState(() => ({
