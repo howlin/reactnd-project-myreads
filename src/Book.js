@@ -20,25 +20,27 @@ class Book extends Component {
       shelf: isBookOnBookshelf(book)
     }));
   }
+  whatShelfChangeAction = (prevShelf, newShelf) => {
+    // user has selected 'none', remove the book from the bookshelf
+    if (newShelf === 'none') {
+      return 'delete';
+    }
+    // user has selected a new shelf, and the book was not previously on a shelf, so let's add it
+    if (newShelf !== 'none' && prevShelf === 'none'){
+      return 'add';
+    }
+    // user has selected a new shelf but the book was already on another shelf, so let's update that
+    if (newShelf !== 'none' && prevShelf !== 'none'){
+      return 'changeShelf';
+    }
+    return '';
+  };
   handleShelfChange = (e) => {
     const newShelf = e.target.value;
     const { book } = this.props;
-    let action;
+    let action = this.whatShelfChangeAction(this.state.shelf, newShelf)
     
     this.setState({shelf: newShelf});
-
-    // user has selected 'none', remove the book from the bookshelf
-    if (newShelf === 'none') {
-      action = 'delete';
-    }
-    // user has selected a new shelf, and the book was not previously on a shelf, so let's add it
-    if (newShelf !== 'none' && this.state.shelf === 'none'){
-      action = 'add';
-    }
-    // user has selected a new shelf but the book was already on another shelf, so let's update that
-    if (newShelf !== 'none' && this.state.shelf !== 'none'){
-      action = 'changeShelf';
-    }
 
     if(this.props.onChangeBook){
       try {
