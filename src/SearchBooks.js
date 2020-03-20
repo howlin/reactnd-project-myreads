@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
-import Bookshelf from './Bookshelf'
+import Bookshelf from './Bookshelf';
 
 class SearchBooks extends Component {
   static propTypes = {
     onChangeBook: PropTypes.func.isRequired,
     isBookOnBookshelf: PropTypes.func.isRequired
-  };  
+  };
   state = {
     searchTerm: '',
     books: []
@@ -44,7 +44,9 @@ class SearchBooks extends Component {
   searchBooksAPI = searchTerm => {
     BooksAPI.search(searchTerm)
       .then((searchResults) => {
-        'error' in searchResults ? this.clearBooks() : this.parseSearchResults(searchResults)
+        'error' in searchResults 
+          ? this.clearBooks() 
+          : this.parseSearchResults(searchResults);
       });
   };
   render(){
@@ -57,8 +59,8 @@ class SearchBooks extends Component {
             <button className="close-search">Close</button>
           </Link>
           <div className="search-books-input-wrapper">
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Search by title or author"
               value={searchTerm}
               onChange={ e => this.onSearchTermChange(e.target.value)} />
@@ -66,7 +68,7 @@ class SearchBooks extends Component {
           </div>
         </div>
         <div className="search-books-results">
-            <Bookshelf 
+            <Bookshelf
               title='Search Results'
               onChangeBook={onChangeBook}
               isBookOnBookshelf={isBookOnBookshelf}

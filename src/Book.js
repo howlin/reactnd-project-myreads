@@ -15,7 +15,7 @@ class Book extends Component {
     };
   }
   componentDidMount() {
-    const { book, isBookOnBookshelf } = this.props
+    const { book, isBookOnBookshelf } = this.props;
     this.setState(() => ({
       shelf: isBookOnBookshelf(book)
     }));

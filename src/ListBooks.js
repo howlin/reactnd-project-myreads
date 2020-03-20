@@ -11,7 +11,7 @@ class ListBooks extends Component {
     isBookOnBookshelf: PropTypes.func.isRequired
   };
   render(){
-    const { bookShelves, books, onChangeBook, isBookOnBookshelf } = this.props
+    const { bookShelves, books, onChangeBook, isBookOnBookshelf } = this.props;
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -20,10 +20,10 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
           {bookShelves.map( ({ title, shelf }) => (
-            <Bookshelf 
-              key={title} 
-              title={title} 
-              onChangeBook={onChangeBook} 
+            <Bookshelf
+              key={title}
+              title={title}
+              onChangeBook={onChangeBook}
               isBookOnBookshelf={isBookOnBookshelf}
               books={
                 books.filter(book => book.shelf === shelf)

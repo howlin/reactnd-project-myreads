@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-// import * as BooksAPI from './BooksAPI'
 import './App.css';
 import SearchBooks from './SearchBooks';
 import ListBooks from './ListBooks';
@@ -21,21 +20,21 @@ class BooksApp extends React.Component {
     books: []
   };
   componentDidMount() {
-    const retrived = localStorage.getItem('books')
+    const retrived = localStorage.getItem('books');
     if (retrived){
       this.setState(() => ({
         books: JSON.parse(retrived)
-      }))
+      }));
     }
   }
   isBookOnBookshelf = (book) => {
     let shelf;
     this.state.books.forEach(b => {
       if (b.id === book.id){
-        shelf = b.shelf
+        shelf = b.shelf;
       }
     });
-    return shelf ?? 'none'
+    return shelf ?? 'none';
   };
   changeShelf = (updatedBook, shelf) => {
     this.setState( prevState => ({
@@ -50,7 +49,7 @@ class BooksApp extends React.Component {
   addBook = (book, shelf) => {
     book.shelf = shelf;
     this.setState( prevState => {
-      const books = [...prevState.books, book]
+      const books = [...prevState.books, book];
       return {
         books: books
       }
@@ -80,23 +79,23 @@ class BooksApp extends React.Component {
         this.changeShelf(book, shelf);
         break;
     }
-  }
+  };
   syncLocalStorage = () => {
-    localStorage.setItem('books', JSON.stringify(this.state.books))
-  }
+    localStorage.setItem('books', JSON.stringify(this.state.books));
+  };
   render() {
     return (
       <div className="app">
         <Route exact path='/' render={() => (
           <ListBooks 
-            bookShelves={this.state.bookShelves} 
-            books={this.state.books} 
-            onChangeBook={this.onChangeBook} 
+            bookShelves={this.state.bookShelves}
+            books={this.state.books}
+            onChangeBook={this.onChangeBook}
             isBookOnBookshelf={this.isBookOnBookshelf} />
         )} />
         <Route path='/search' render={() => (
           <SearchBooks 
-            onChangeBook={this.onChangeBook} 
+            onChangeBook={this.onChangeBook}
             isBookOnBookshelf={this.isBookOnBookshelf} />
         )} />
       </div>
