@@ -44,8 +44,8 @@ class SearchBooks extends Component {
   searchBooksAPI = searchTerm => {
     BooksAPI.search(searchTerm)
       .then((searchResults) => {
-        'error' in searchResults 
-          ? this.clearBooks() 
+        'error' in searchResults
+          ? this.clearBooks()
           : this.parseSearchResults(searchResults);
       });
   };

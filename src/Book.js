@@ -34,7 +34,7 @@ class Book extends Component {
   handleShelfChange = (e) => {
     const newShelf = e.target.value;
     const { book } = this.props;
-    let action = this.whatShelfChangeAction(this.state.shelf, newShelf)
+    let action = this.whatShelfChangeAction(this.state.shelf, newShelf);
     
     this.setState({shelf: newShelf});
 
